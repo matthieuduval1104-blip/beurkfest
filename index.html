@@ -18,7 +18,7 @@
     <meta property="og:locale" content="fr_FR">
     <meta property="og:image" content="https://beurkfest.com/img/og-image.jpg">
     <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:height" content="1624">
 
     <script type="application/ld+json">
     {
@@ -85,7 +85,7 @@
             overflow: hidden;
         }
 
-        /* ===== LOGO AGRONAUTE ===== */
+        /* ===== LOGO AGRONAUTE + PAWS ===== */
         .logo-agro {
             position: absolute;
             top: 1.5vh;
@@ -93,10 +93,14 @@
             transform: translateX(-50%);
             z-index: 10;
             opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 2vw;
             animation: fade-down 0.5s ease-out 2.4s both;
         }
 
         .logo-agro img { width: min(10vw, 130px); height: auto; }
+        .logo-agro .logo-paws img { width: min(9vw, 110px); }
 
         /* ===== LOGO + BASELINE ===== */
         .logo-group {
@@ -392,8 +396,9 @@
             .cercle-dates, .cercle-lieu, .cta-insta,
             .mascotte { position: static; transform: none; animation: none; opacity: 1; }
 
-            .logo-agro { order: 0; }
-            .logo-agro img { width: 100px; }
+            .logo-agro { order: 0; gap: 4vw; }
+            .logo-agro img { width: 85px; }
+            .logo-agro .logo-paws img { width: 78px; }
 
             .logo-group { order: 1; text-align: center; }
             .logo-img { width: 88vw; }
@@ -439,6 +444,7 @@
 
         <div class="logo-agro">
             <a href="https://www.lagronaute.fr/" target="_blank" rel="noopener"><img src="img/agronaute.png" alt="L'Agronaute par La Sauge"></a>
+            <a class="logo-paws" href="https://www.instagram.com/paws_hotdog/" target="_blank" rel="noopener"><img src="img/paws.png" alt="Paws"></a>
         </div>
 
         <div class="logo-group">
@@ -486,7 +492,7 @@
 
         <div class="cta-insta">
             <p class="cta-insta-label">Pour les coulisses et les premières miettes :</p>
-            <a href="https://instagram.com/beurkfest" target="_blank" rel="noopener">@beurkfest</a>
+            <a href="https://www.instagram.com/beurkfestival/" target="_blank" rel="noopener">@beurkfestival</a>
         </div>
 
     </div>

@@ -841,10 +841,10 @@
                 <div class="overlay-title">Billetterie</div>
                 <a class="billet-lien-direct" href="https://shotgun.live/festivals/beurk" target="_blank" rel="noopener">&#8594; Lien direct Shotgun</a>
             </div>
-            <iframe id="billet-iframe" src="https://shotgun.live/festivals/beurk?embedded=1&ui=light" allow="payment" scrolling="no" style="width:100%; height:800px; border:0; overflow:hidden;"></iframe>
+            <iframe id="billet-iframe" title="Billetterie Shotgun" src="https://shotgun.live/festivals/beurk?embedded=1&ui=light" allow="payment" style="width:100%; height:800px; border:0; overflow:hidden;"></iframe>
         </div>
     </div>
-    <script src="https://shotgun.live/widget.js"></script>
+    <script src="https://shotgun.live/widget.js" defer></script>
 
     <div class="overlay overlay-programme" id="overlay-programme" role="dialog" aria-modal="true" aria-label="Programme BEURK">
         <button class="overlay-close programme-close" id="close-programme" aria-label="Fermer">&#10005;</button>
@@ -854,20 +854,20 @@
         <div class="programme-viewport">
             <div class="programme-track" id="programme-track">
                 <div class="programme-spread">
-                    <img src="img/programme/page-1-cover.webp" alt="Le programme BEURK">
-                    <img src="img/programme/page-2-samedi-menu.webp" alt="Samedi, menu a la carte">
+                    <img src="img/programme/page-1-cover.webp" alt="Le programme BEURK" draggable="false">
+                    <img src="img/programme/page-2-samedi-menu.webp" alt="Samedi, menu a la carte" draggable="false">
                 </div>
                 <div class="programme-spread">
-                    <img src="img/programme/page-3-animations.webp" alt="Les z'animations">
-                    <img src="img/programme/page-4-ateliers.webp" alt="Les z'ateliers">
+                    <img src="img/programme/page-3-animations.webp" alt="Les z'animations" draggable="false">
+                    <img src="img/programme/page-4-ateliers.webp" alt="Les z'ateliers" draggable="false">
                 </div>
                 <div class="programme-spread">
-                    <img src="img/programme/page-5-spectacles.webp" alt="Les pestacles">
-                    <img src="img/programme/page-6-restauration.webp" alt="La restauration">
+                    <img src="img/programme/page-5-spectacles.webp" alt="Les pestacles" draggable="false">
+                    <img src="img/programme/page-6-restauration.webp" alt="La restauration" draggable="false">
                 </div>
                 <div class="programme-spread">
-                    <img src="img/programme/page-7-dimanche-cover.webp" alt="Dimanche, banquet ludique et boum des petits chefs">
-                    <img src="img/programme/page-8-dimanche-detail.webp" alt="Dimanche, le detail">
+                    <img src="img/programme/page-7-dimanche-cover.webp" alt="Dimanche, banquet ludique et boum des petits chefs" draggable="false">
+                    <img src="img/programme/page-8-dimanche-detail.webp" alt="Dimanche, le detail" draggable="false">
                 </div>
             </div>
         </div>
@@ -916,13 +916,14 @@
             });
         }
 
-        // Overlays (manifeste + billetterie), meme mecanique pour les deux
-        function wireOverlay(overlayId, openTriggerId, closeButtonId) {
+        // Overlays (manifeste + billetterie + programme), meme mecanique pour les trois
+        function wireOverlay(overlayId, openTriggerId, closeButtonId, onOpen) {
             var overlay = document.getElementById(overlayId);
             var openTrigger = document.getElementById(openTriggerId);
             function open() {
                 overlay.classList.add('open');
                 overlay.scrollTop = 0;
+                if (onOpen) onOpen();
             }
             openTrigger.addEventListener('click', open);
             openTrigger.addEventListener('keydown', function(e) {
@@ -943,7 +944,6 @@
         }
         wireOverlay('overlay', 'open-manifeste', 'close-manifeste');
         wireOverlay('overlay-billet', 'open-billetterie', 'close-billetterie');
-        wireOverlay('overlay-programme', 'open-programme', 'close-programme');
 
         // Livret programme : feuilletage par spreads (4 doubles pages)
         (function() {
@@ -983,7 +983,7 @@
                 startX = null;
             });
 
-            document.getElementById('open-programme').addEventListener('click', function() { goTo(0); });
+            wireOverlay('overlay-programme', 'open-programme', 'close-programme', function() { goTo(0); });
 
             render();
         })();

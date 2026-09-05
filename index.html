@@ -74,7 +74,11 @@
             overflow: hidden;
             height: 100vh;
             height: 100dvh;
-            cursor: url('img/cursor-fork.png') 16 0, auto;
+        }
+
+        /* Curseur normal partout, fourchette uniquement sur les elements cliquables. */
+        a, button, [role="button"] {
+            cursor: url('img/cursor-fork.png') 16 0, pointer;
         }
 
         .page {
@@ -128,7 +132,7 @@
             gap: 0.5vw;
             z-index: 10;
             opacity: 0;
-            animation: slide-in-left 0.6s ease-out 3.2s both;
+            animation: slide-in-left 0.5s ease-out 0.4s both;
         }
 
         .jxx-text { order: 1; }
@@ -165,13 +169,19 @@
         .cercle-dates img { width: 100%; height: auto; }
         .cercle-dates .circle-label {
             position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center;
             font-size: clamp(1rem, 1.7vw, 1.4rem);
             font-weight: bold; line-height: 1.25; padding: 15%;
         }
+        .cercle-lien {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+        }
 
-        /* ===== CERCLE VERT / LIEU ===== */
+        /* ===== CERCLE VERT / BILLETTERIE ===== */
         .cercle-lieu {
             position: absolute;
             bottom: 1vh;
@@ -180,16 +190,105 @@
             transform: rotate(3deg);
             z-index: 8;
             opacity: 0;
-            animation: slide-in-right 0.6s ease-out 1.9s both;
+            animation: slide-in-right 0.6s ease-out 1.9s both, pulse-lieu 2.5s ease-in-out 3.5s infinite;
         }
 
-        .cercle-lieu img { width: 100%; height: auto; }
+        @keyframes pulse-lieu {
+            0%, 100% { transform: rotate(3deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.08); }
+        }
+
+        .cercle-lieu:hover, .cercle-lieu:focus-visible { animation-play-state: paused; transform: rotate(0deg) scale(1.12); }
+        .cercle-lieu:focus-visible { outline: 3px solid #ffd968; outline-offset: 4px; border-radius: 50%; }
+
+        .cercle-lieu img { width: 100%; height: auto; transition: opacity 0.25s ease; }
+
+        .cercle-lieu .circle-hover {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: auto;
+            opacity: 0; transition: opacity 0.25s ease;
+        }
+
         .cercle-lieu .circle-label {
             position: absolute; inset: 0;
             display: flex; align-items: center; justify-content: center;
             text-align: center;
-            font-size: clamp(0.8rem, 1.3vw, 1.1rem);
+            font-size: clamp(0.95rem, 1.5vw, 1.3rem);
             font-weight: bold; line-height: 1.25; padding: 16%;
+            color: #6a2ad0;
+            transition: color 0.25s ease;
+        }
+
+        @media (hover: hover) {
+            .cercle-lieu:hover > img:first-of-type { opacity: 0; }
+            .cercle-lieu:hover .circle-hover { opacity: 1; }
+            .cercle-lieu:hover .circle-label { color: #6cc680; }
+        }
+
+        /* ===== BADGE / PROGRAMME (option B) =====
+           Satellite qui mord le bord de la grande bulle jaune, meme
+           asset PNG que le cercle dates (pas de nouvelle texture). */
+        .cercle-programme {
+            position: absolute;
+            top: 22vh;
+            left: 8vw;
+            width: min(9.5vw, 125px);
+            transform: rotate(-6deg);
+            z-index: 9;
+            opacity: 0;
+            animation: pop-in 0.4s ease-out 2.2s both, pulse-programme 2.5s ease-in-out 4s infinite;
+        }
+
+        @keyframes pulse-programme {
+            0%, 100% { transform: rotate(-6deg) scale(1); }
+            50% { transform: rotate(-4deg) scale(1.1); }
+        }
+
+        .cercle-programme:hover, .cercle-programme:focus-visible { animation-play-state: paused; transform: rotate(0deg) scale(1.15); }
+        .cercle-programme:focus-visible { outline: 3px solid #6a2ad0; outline-offset: 4px; border-radius: 50%; }
+
+        .cercle-programme img { width: 100%; height: auto; transition: opacity 0.25s ease; }
+
+        /* Bandeau qui entoure le badge : largeur egale forcee (pas de
+           height:auto) pour que l'anneau reste uniforme tout autour, meme si
+           les PNG source ne sont pas parfaitement carres. Pas de rotation
+           propre : il tourne avec le badge en un seul bloc, sinon l'anneau
+           parait plus epais d'un cote que de l'autre. */
+        .cercle-programme .circle-halo,
+        .cercle-programme .circle-halo-hover {
+            position: absolute; top: 50%; left: 50%;
+            width: 126%; height: 126%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            transition: opacity 0.25s ease;
+        }
+        .cercle-programme .circle-halo-hover { opacity: 0; }
+
+        .cercle-programme .circle-base {
+            position: relative;
+        }
+
+        .cercle-programme .circle-hover {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: auto;
+            opacity: 0; transition: opacity 0.25s ease;
+        }
+        .cercle-programme .circle-label {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            font-size: clamp(0.72rem, 1vw, 0.88rem);
+            font-weight: bold; line-height: 1.15; padding: 14%;
+            color: #ffffff;
+            transition: color 0.25s ease;
+        }
+
+        @media (hover: hover) {
+            .cercle-programme:hover .circle-base { opacity: 0; }
+            .cercle-programme:hover .circle-hover { opacity: 1; }
+            .cercle-programme:hover .circle-halo { opacity: 0; }
+            .cercle-programme:hover .circle-halo-hover { opacity: 1; }
+            .cercle-programme:hover .circle-label { color: #6a2ad0; }
         }
 
         /* ===== CERCLE VIOLET / PSST ===== */
@@ -200,7 +299,6 @@
             width: min(14vw, 175px);
             transform: rotate(-3deg);
             z-index: 12;
-            cursor: pointer;
             opacity: 0;
             animation: pop-in 0.5s ease-out 1.8s both, pulse-psst 2.5s ease-in-out 3.5s infinite;
         }
@@ -328,11 +426,14 @@
             font-weight: bold; text-align: center; opacity: 0.85;
         }
 
-        /* Instagram : reduit au handle, en bas a droite, au-dessus de la bande. */
+        /* Instagram : reduit au handle, en bas a droite, au-dessus de la bande.
+           z-index releve au-dessus de .soutiens (21) : sinon la bande fixe en
+           bas, meme sans contenu visible a cet endroit, intercepte le clic. */
         .cta-insta {
             top: auto; bottom: 3.4vh; left: auto; right: 3vw;
             transform: none; text-align: right;
             animation: fade-up-simple 0.5s ease-out 2.4s both;
+            z-index: 22;
         }
         @keyframes fade-up-simple {
             from { opacity: 0; transform: translateY(8px); }
@@ -340,32 +441,24 @@
         }
         .cta-insta a { font-size: clamp(0.9rem, 1.15vw, 1.1rem); }
 
-        /* Dates : typo agrandie dans le cercle jaune. */
-        .cercle-dates .circle-label { font-size: clamp(1.18rem, 2.05vw, 1.7rem); }
+        /* Dates + lieu : typo agrandie dans le cercle jaune, resserree pour
+           laisser tenir "L'Agronaute" sur la troisieme ligne. */
+        .cercle-dates .circle-label { font-size: clamp(0.98rem, 1.7vw, 1.4rem); }
 
         /* Le bloc central remonte (le CTA a libere le haut), ce qui permet de
            descendre le cercle vert et la tomate hors du K. */
         .logo-group { top: 44%; }
         .logo-img { width: min(52vw, 640px); }
-        /* Le cercle vert glisse vers la droite : descendre seul ne suffisait
-           pas, l'espace entre le bas du logo et le cercle est trop mince pour
-           y loger la tomate. En decalant, elle sort de sous le K. */
-        .cercle-lieu { bottom: 15vh; right: 12vw; width: min(15.5vw, 190px); }
+        /* Cercle vert cale dans l'espace entre le texte "...a table !" et le
+           bandeau "Avec le soutien de" : centre sous "a table", legerement a
+           droite du milieu du texte, sans toucher ni l'un ni l'autre. */
+        .cercle-lieu { bottom: 14vh; right: 34vw; width: min(11vw, 165px); }
         .mascotte-casserole { bottom: 15.5vh; }
-        .mascotte-tomate {
-            top: auto;
-            bottom: calc(15vh + min(15.5vw, 190px) + 10px);
-            right: calc(12vw + (min(15.5vw, 190px) - min(11vw, 135px)) / 2);
-        }
 
         @media (min-width: 769px) and (max-height: 800px) {
             .logo-group { top: 42%; }
             .logo-img { width: min(48vw, 600px); }
-            .cercle-lieu { width: min(13.5vw, 165px); bottom: 15vh; right: 12vw; }
-            .mascotte-tomate {
-                bottom: calc(15vh + min(13.5vw, 165px) + 10px);
-                right: calc(12vw + (min(13.5vw, 165px) - min(11vw, 135px)) / 2);
-            }
+            .cercle-lieu { bottom: 14vh; right: 34vw; width: min(11vw, 165px); }
         }
 
         /* ===== ANIMATIONS D'ENTRÉE ===== */
@@ -407,11 +500,12 @@
             display: flex; align-items: center; justify-content: center;
             padding: 1rem;
             opacity: 0;
+            visibility: hidden;
             pointer-events: none;
-            transition: opacity 0.35s ease;
+            transition: opacity 0.35s ease, visibility 0s linear 0.35s;
         }
 
-        .overlay.open { opacity: 1; pointer-events: auto; }
+        .overlay.open { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 0.35s ease; }
 
         .overlay-card {
             background: url('img/fond-carreaux.png') repeat;
@@ -432,7 +526,7 @@
             width: 38px; height: 38px;
             background: #ffd968; border: 3px solid #6a2ad0; border-radius: 50%;
             font-family: inherit; font-size: 1.2rem; color: #6a2ad0;
-            cursor: pointer; line-height: 1;
+            line-height: 1;
             display: flex; align-items: center; justify-content: center;
             font-weight: bold;
         }
@@ -458,23 +552,107 @@
         .overlay-text p:first-child { font-weight: bold; font-size: 0.95rem; }
         .overlay-text p:last-child { font-weight: bold; font-style: italic; }
 
+        /* ===== OVERLAY BILLETTERIE ===== */
+        .overlay-card-billet { max-width: 460px; padding: 2.5rem 1.5rem 1.5rem; }
+
+        .billet-titre-row {
+            display: flex; align-items: baseline; flex-wrap: wrap;
+            column-gap: 1rem; row-gap: 0.2rem;
+        }
+        .billet-lien-direct {
+            font-size: 0.8rem; font-weight: bold; color: #6a2ad0;
+            text-decoration: none;
+            border-bottom: 2px solid #6cc680;
+            padding-bottom: 1px;
+            transition: border-color 0.2s ease;
+        }
+        .billet-lien-direct:hover { border-color: #ffd968; }
+
+        /* La fiche Shotgun grandit (accordeons depliants) au-dela d'un ecran :
+           sans scroll ici, le haut et le bas deviennent inatteignables (bouton
+           fermer inclus). Le popup billetterie defile comme sur mobile. */
+        #overlay-billet.overlay { align-items: flex-start; overflow-y: auto; padding: 3vh 1rem; }
+
         .overlay-mascotte {
             position: absolute; bottom: 0.8rem; right: 1.5rem;
             width: 60px; transform: rotate(10deg); opacity: 0.85;
         }
 
+        /* ===== LIVRET PROGRAMME ===== */
+        .overlay-programme { align-items: center; }
+
+        .programme-viewport {
+            position: relative;
+            width: min(90vw, 860px, calc((100vh - 140px) * 1.6));
+            aspect-ratio: 1.6;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.25);
+            transform: rotate(-0.6deg);
+        }
+
+        .programme-track {
+            display: flex;
+            width: 400%;
+            height: 100%;
+            transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .programme-spread {
+            width: 25%;
+            height: 100%;
+            flex-shrink: 0;
+            display: flex;
+        }
+
+        .programme-spread img {
+            width: 50%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .programme-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 44px; height: 44px;
+            background: #ffd968; border: 3px solid #6a2ad0; border-radius: 50%;
+            color: #6a2ad0; font-size: 1.1rem;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; z-index: 2;
+            transition: opacity 0.2s ease, transform 0.15s ease;
+        }
+        .programme-nav:hover { transform: translateY(-50%) scale(1.1); }
+        .programme-nav.is-disabled { opacity: 0.25; pointer-events: none; }
+        .programme-prev { left: 1.5vw; }
+        .programme-next { right: 1.5vw; }
+
+        @media (max-width: 640px) {
+            .programme-viewport {
+                width: min(82vw, 420px, calc((100vh - 160px) * 0.4));
+                aspect-ratio: 0.4;
+            }
+            .programme-spread { flex-direction: column; }
+            .programme-spread img { width: 100%; height: 50%; }
+            .programme-nav { width: 38px; height: 38px; font-size: 0.95rem; }
+            .programme-prev { left: 2vw; }
+            .programme-next { right: 2vw; }
+        }
+
         /* ===== MOBILE ===== */
         @media (max-width: 768px) {
-            body { overflow: auto; height: auto; cursor: auto; }
+            body {
+                overflow: auto; height: auto; cursor: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-y: contain;
+            }
 
             .page {
-                height: auto; min-height: 100dvh; overflow: visible;
+                height: auto; min-height: 100vh; overflow: visible;
                 display: flex; flex-direction: column; align-items: center;
                 padding: 2vh 4vw 4vh; gap: 2vh;
             }
 
             .logo-agro, .logo-group, .jxx-group, .cercle-psst,
-            .cercle-dates, .cercle-lieu, .cta-insta,
+            .cercle-dates, .cercle-lieu, .cta-insta, .cercle-programme,
             .mascotte { position: static; transform: none; animation: none; opacity: 1; }
 
             .logo-agro { order: 0; gap: 4vw; }
@@ -491,18 +669,30 @@
             .brocoli-img { width: 60px; }
             .jxx-number { font-size: 2.2rem; text-align: left; }
 
-            .cercle-psst { order: 3; width: 28vw; position: relative; inset: auto; }
-            .cercle-psst .circle-label { font-size: 0.9rem; }
+            /* Ordre demande : billetterie, infos cles (dates+lieu), menu, manifeste.
+               Marge uniforme explicite entre les 4 cercles, independante du gap
+               general de la colonne (qui gere logo/compteur/Instagram). */
+            .cercle-lieu, .cercle-dates, .cercle-programme, .cercle-psst {
+                margin-top: 1.2rem; position: relative; inset: auto;
+            }
 
-            .cercle-dates { order: 4; width: 55vw; position: relative; inset: auto; }
-            .cercle-dates .circle-label { font-size: 1.1rem; }
-
-            .cercle-lieu { order: 5; width: 38vw; position: relative; inset: auto; }
+            .cercle-lieu { order: 3; width: 38vw; }
             .cercle-lieu .circle-label { font-size: 0.9rem; }
 
-            .mascotte-tomate { position: absolute; top: 34vh; right: 3vw; left: auto; bottom: auto; width: 60px !important; }
+            .cercle-dates { order: 4; width: 55vw; }
+            .cercle-dates .circle-label { font-size: 1.1rem; }
+
+            .cercle-programme { order: 5; width: 30vw; }
+            .cercle-programme .circle-label { font-size: 0.85rem; }
+
+            .cercle-psst { order: 6; width: 28vw; }
+            .cercle-psst .circle-label { font-size: 0.9rem; }
+
+            /* Le dernier cercle (manifeste) ne doit pas coller au lien Instagram */
+            .cta-insta { margin-top: 1.5rem; }
+
+            .mascotte-tomate, .mascotte-casserole { display: none; }
             .mascotte-fourchette { position: absolute; top: 60vh; left: 2vw; right: auto; bottom: auto; width: 55px !important; }
-            .mascotte-casserole { position: absolute; top: 46vh; left: 3vw; right: auto; bottom: auto; width: 50px !important; }
 
 
             .page { padding-bottom: 0; }
@@ -525,7 +715,7 @@
             .soutiens .s1 { height: 45px; }
             .soutiens .s2 { height: 37px; }
             .soutiens .s3 { height: 27px; }
-            .cercle-lieu, .mascotte-casserole { bottom: auto; }
+            .cercle-lieu { bottom: auto; }
 
 
             .overlay { align-items: flex-start; overflow-y: auto; padding: 4vh 4vw; }
@@ -536,7 +726,7 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation: none !important; transition: none !important; }
             .logo-group, .jxx-group, .cercle-dates, .cercle-lieu,
-            .cercle-psst, .mascotte, .cta-insta, .logo-agro, .soutiens { opacity: 1; }
+            .cercle-psst, .mascotte, .cta-insta, .logo-agro, .soutiens, .cercle-programme { opacity: 1; }
         }
     </style>
 </head>
@@ -576,12 +766,25 @@
 
         <div class="cercle-dates">
             <img src="img/cercle-jaune.png" alt="">
-            <div class="circle-label">26 &amp; 27<br>septembre<br>2026</div>
+            <div class="circle-label">
+                <span>26 &amp; 27</span>
+                <span>septembre</span>
+                <span><a class="cercle-lien" href="https://www.google.com/maps/dir/?api=1&destination=L%27Agronaute%2C%20Rue%20du%20S%C3%A9n%C3%A9gal%2C%2044200%20Nantes" target="_blank" rel="noopener">L'Agronaute</a></span>
+            </div>
         </div>
 
-        <div class="cercle-lieu">
+        <div class="cercle-lieu" id="open-billetterie" role="button" tabindex="0" aria-label="Ouvrir la billetterie">
             <img src="img/cercle-vert.png" alt="">
-            <div class="circle-label">L'Agronaute,<br>Nantes</div>
+            <img class="circle-hover" src="img/cercle-violet.png" alt="">
+            <div class="circle-label">Billetterie</div>
+        </div>
+
+        <div class="cercle-programme" id="open-programme" role="button" tabindex="0" aria-label="Voir le programme complet">
+            <img class="circle-halo" src="img/cercle-vert.png" alt="">
+            <img class="circle-halo-hover" src="img/cercle-violet.png" alt="">
+            <img class="circle-base" src="img/cercle-violet.png" alt="">
+            <img class="circle-hover" src="img/cercle-vert.png" alt="">
+            <div class="circle-label">Au menu</div>
         </div>
 
         <div class="mascotte mascotte-tomate" data-base="scaleX(-1) rotate(10deg)">
@@ -631,6 +834,47 @@
         </div>
     </div>
 
+    <div class="overlay" id="overlay-billet" role="dialog" aria-modal="true" aria-label="Billetterie BEURK">
+        <div class="overlay-card overlay-card-billet">
+            <button class="overlay-close" id="close-billetterie" aria-label="Fermer">&#10005;</button>
+            <div class="billet-titre-row">
+                <div class="overlay-title">Billetterie</div>
+                <a class="billet-lien-direct" href="https://shotgun.live/festivals/beurk" target="_blank" rel="noopener">&#8594; Lien direct Shotgun</a>
+            </div>
+            <iframe id="billet-iframe" src="https://shotgun.live/festivals/beurk?embedded=1&ui=light" allow="payment" scrolling="no" style="width:100%; height:800px; border:0; overflow:hidden;"></iframe>
+        </div>
+    </div>
+    <script src="https://shotgun.live/widget.js"></script>
+
+    <div class="overlay overlay-programme" id="overlay-programme" role="dialog" aria-modal="true" aria-label="Programme BEURK">
+        <button class="overlay-close programme-close" id="close-programme" aria-label="Fermer">&#10005;</button>
+
+        <button class="programme-nav programme-prev" id="programme-prev" aria-label="Page precedente">&#10094;</button>
+
+        <div class="programme-viewport">
+            <div class="programme-track" id="programme-track">
+                <div class="programme-spread">
+                    <img src="img/programme/page-1-cover.webp" alt="Le programme BEURK">
+                    <img src="img/programme/page-2-samedi-menu.webp" alt="Samedi, menu a la carte">
+                </div>
+                <div class="programme-spread">
+                    <img src="img/programme/page-3-animations.webp" alt="Les z'animations">
+                    <img src="img/programme/page-4-ateliers.webp" alt="Les z'ateliers">
+                </div>
+                <div class="programme-spread">
+                    <img src="img/programme/page-5-spectacles.webp" alt="Les pestacles">
+                    <img src="img/programme/page-6-restauration.webp" alt="La restauration">
+                </div>
+                <div class="programme-spread">
+                    <img src="img/programme/page-7-dimanche-cover.webp" alt="Dimanche, banquet ludique et boum des petits chefs">
+                    <img src="img/programme/page-8-dimanche-detail.webp" alt="Dimanche, le detail">
+                </div>
+            </div>
+        </div>
+
+        <button class="programme-nav programme-next" id="programme-next" aria-label="Page suivante">&#10095;</button>
+    </div>
+
     <script>
     (function() {
         var festival = new Date(2026, 8, 26);
@@ -647,7 +891,7 @@
         var el = document.getElementById('jxx');
         el.textContent = 'J-0';
         setTimeout(function() {
-            var dur = 2800;
+            var dur = 1200;
             var t0 = performance.now();
             function tick(now) {
                 var p = Math.min((now - t0) / dur, 1);
@@ -656,7 +900,7 @@
                 if (p < 1) requestAnimationFrame(tick);
             }
             requestAnimationFrame(tick);
-        }, 3200);
+        }, 500);
 
         var m;
         if (daysLeft <= 0) m = 'À TAAABLE !';
@@ -672,27 +916,77 @@
             });
         }
 
-        // Overlay
-        var overlay = document.getElementById('overlay');
-        var openManifeste = document.getElementById('open-manifeste');
-        openManifeste.addEventListener('click', function() {
-            overlay.classList.add('open');
-        });
-        openManifeste.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
+        // Overlays (manifeste + billetterie), meme mecanique pour les deux
+        function wireOverlay(overlayId, openTriggerId, closeButtonId) {
+            var overlay = document.getElementById(overlayId);
+            var openTrigger = document.getElementById(openTriggerId);
+            function open() {
                 overlay.classList.add('open');
+                overlay.scrollTop = 0;
             }
-        });
-        document.getElementById('close-manifeste').addEventListener('click', function() {
-            overlay.classList.remove('open');
-        });
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) overlay.classList.remove('open');
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && overlay.classList.contains('open')) overlay.classList.remove('open');
-        });
+            openTrigger.addEventListener('click', open);
+            openTrigger.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    open();
+                }
+            });
+            document.getElementById(closeButtonId).addEventListener('click', function() {
+                overlay.classList.remove('open');
+            });
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.classList.remove('open');
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && overlay.classList.contains('open')) overlay.classList.remove('open');
+            });
+        }
+        wireOverlay('overlay', 'open-manifeste', 'close-manifeste');
+        wireOverlay('overlay-billet', 'open-billetterie', 'close-billetterie');
+        wireOverlay('overlay-programme', 'open-programme', 'close-programme');
+
+        // Livret programme : feuilletage par spreads (4 doubles pages)
+        (function() {
+            var track = document.getElementById('programme-track');
+            var prevBtn = document.getElementById('programme-prev');
+            var nextBtn = document.getElementById('programme-next');
+            var viewport = document.querySelector('.programme-viewport');
+            var total = 4;
+            var index = 0;
+
+            function render() {
+                track.style.transform = 'translateX(-' + (index * (100 / total)) + '%)';
+                prevBtn.classList.toggle('is-disabled', index === 0);
+                nextBtn.classList.toggle('is-disabled', index === total - 1);
+            }
+
+            function goTo(i) {
+                index = Math.max(0, Math.min(total - 1, i));
+                render();
+            }
+
+            prevBtn.addEventListener('click', function() { goTo(index - 1); });
+            nextBtn.addEventListener('click', function() { goTo(index + 1); });
+
+            document.addEventListener('keydown', function(e) {
+                if (!document.getElementById('overlay-programme').classList.contains('open')) return;
+                if (e.key === 'ArrowLeft') goTo(index - 1);
+                if (e.key === 'ArrowRight') goTo(index + 1);
+            });
+
+            var startX = null;
+            viewport.addEventListener('pointerdown', function(e) { startX = e.clientX; });
+            viewport.addEventListener('pointerup', function(e) {
+                if (startX === null) return;
+                var dx = e.clientX - startX;
+                if (Math.abs(dx) > 40) { goTo(dx < 0 ? index + 1 : index - 1); }
+                startX = null;
+            });
+
+            document.getElementById('open-programme').addEventListener('click', function() { goTo(0); });
+
+            render();
+        })();
 
         // Parallax souris (desktop only)
         if (window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

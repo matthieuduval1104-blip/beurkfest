@@ -35,6 +35,8 @@
         "name": "L'Agronaute",
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "Rue du Sénégal",
+          "postalCode": "44200",
           "addressLocality": "Nantes",
           "addressCountry": "FR"
         }
@@ -71,7 +73,7 @@
             background: url('img/fond-carreaux.png') repeat;
             background-size: 1000px auto;
             color: #6a2ad0;
-            overflow: hidden;
+            overflow: auto;
             height: 100vh;
             height: 100dvh;
         }
@@ -86,7 +88,7 @@
             width: 100vw;
             height: 100vh;
             height: 100dvh;
-            overflow: hidden;
+            overflow: auto;
         }
 
         /* ===== LOGO AGRONAUTE + PAWS ===== */
@@ -149,7 +151,7 @@
 
         .jxx-milestone {
             font-size: clamp(0.6rem, 0.9vw, 0.8rem);
-            opacity: 0.7;
+            opacity: 0.85;
             margin-top: 0.3vh;
             text-align: right;
         }
@@ -215,14 +217,14 @@
             text-align: center;
             font-size: clamp(0.95rem, 1.5vw, 1.3rem);
             font-weight: bold; line-height: 1.25; padding: 16%;
-            color: #6a2ad0;
+            color: #50209c;
             transition: color 0.25s ease;
         }
 
         @media (hover: hover) {
             .cercle-lieu:hover > img:first-of-type { opacity: 0; }
             .cercle-lieu:hover .circle-hover { opacity: 1; }
-            .cercle-lieu:hover .circle-label { color: #6cc680; }
+            .cercle-lieu:hover .circle-label { color: #ffffff; }
         }
 
         /* ===== BADGE / PROGRAMME (option B) =====
@@ -288,7 +290,7 @@
             .cercle-programme:hover .circle-hover { opacity: 1; }
             .cercle-programme:hover .circle-halo { opacity: 0; }
             .cercle-programme:hover .circle-halo-hover { opacity: 1; }
-            .cercle-programme:hover .circle-label { color: #6a2ad0; }
+            .cercle-programme:hover .circle-label { color: #50209c; }
         }
 
         /* ===== CERCLE VIOLET / PSST ===== */
@@ -637,8 +639,13 @@
             .programme-next { right: 2vw; }
         }
 
-        /* ===== MOBILE ===== */
-        @media (max-width: 768px) {
+        /* ===== MOBILE =====
+           Se declenche aussi en (max-height: 560px) : au-dela d'un zoom
+           navigateur ~180-200% sur un ecran desktop classique, les
+           elements en vh/vw ne debordent pas (rien a scroller) mais se
+           chevauchent et deviennent illisibles. La mise en page empilee
+           mobile reste la sortie de secours la plus sure. */
+        @media (max-width: 768px), (max-height: 560px) {
             body {
                 overflow: auto; height: auto; cursor: auto;
                 -webkit-overflow-scrolling: touch;
@@ -691,8 +698,7 @@
             /* Le dernier cercle (manifeste) ne doit pas coller au lien Instagram */
             .cta-insta { margin-top: 1.5rem; }
 
-            .mascotte-tomate, .mascotte-casserole { display: none; }
-            .mascotte-fourchette { position: absolute; top: 60vh; left: 2vw; right: auto; bottom: auto; width: 55px !important; }
+            .mascotte-tomate, .mascotte-casserole, .mascotte-fourchette { display: none; }
 
 
             .page { padding-bottom: 0; }
@@ -818,7 +824,7 @@
     <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Manifeste BEURK">
         <div class="overlay-card">
             <button class="overlay-close" id="close-manifeste" aria-label="Fermer">&#10005;</button>
-            <div class="overlay-title">Le manifeste</div>
+            <h2 class="overlay-title">Le manifeste</h2>
             <div class="overlay-text">
                 <p>BEURK. C'est quoi ? Le son d'un palais qui s'éveille.</p>
                 <p>Un enfant qui cuisine, c'est un enfant qui mange. Qui goûte sans se méfier, invente sans complexe. Pas de cours magistral, pas de manuel. On met les mains dedans, et quelque chose se passe.</p>
@@ -838,10 +844,10 @@
         <div class="overlay-card overlay-card-billet">
             <button class="overlay-close" id="close-billetterie" aria-label="Fermer">&#10005;</button>
             <div class="billet-titre-row">
-                <div class="overlay-title">Billetterie</div>
+                <h2 class="overlay-title">Billetterie</h2>
                 <a class="billet-lien-direct" href="https://shotgun.live/festivals/beurk" target="_blank" rel="noopener">&#8594; Lien direct Shotgun</a>
             </div>
-            <iframe id="billet-iframe" title="Billetterie Shotgun" src="https://shotgun.live/festivals/beurk?embedded=1&ui=light" allow="payment" style="width:100%; height:800px; border:0; overflow:hidden;"></iframe>
+            <iframe id="billet-iframe" title="Billetterie Shotgun" src="https://shotgun.live/festivals/beurk?embedded=1&ui=light" allow="payment" style="width:100%; min-height:300px; height:min(800px, 85vh); border:0; overflow:hidden;"></iframe>
         </div>
     </div>
     <script src="https://shotgun.live/widget.js" defer></script>
@@ -878,9 +884,14 @@
     <script>
     (function() {
         var festival = new Date(2026, 8, 26);
+        var festivalEnd = new Date(2026, 8, 28);
         var start = new Date(2026, 0, 1);
         var now = new Date();
         var msDay = 86400000;
+
+        if (now >= festivalEnd) {
+            document.querySelector('.jxx-group').style.display = 'none';
+        } else {
         var daysLeft = Math.ceil((festival - now) / msDay);
         var totalDays = Math.ceil((festival - start) / msDay);
         var elapsed = totalDays - daysLeft;
@@ -909,6 +920,7 @@
         else if (pct >= 25) m = 'Ça mijote tranquillou !';
         else m = "Plus d'informations très prochainement";
         document.getElementById('milestone').textContent = m;
+        }
 
         if (window.innerWidth <= 768) {
             document.querySelectorAll('.cercle-psst .circle-label').forEach(function(l) {
@@ -920,11 +932,26 @@
         function wireOverlay(overlayId, openTriggerId, closeButtonId, onOpen) {
             var overlay = document.getElementById(overlayId);
             var openTrigger = document.getElementById(openTriggerId);
+            var closeButton = document.getElementById(closeButtonId);
+            var lastFocused = null;
+
+            function focusables() {
+                return overlay.querySelectorAll('a[href], button, iframe, [tabindex]:not([tabindex="-1"])');
+            }
+
+            function close() {
+                overlay.classList.remove('open');
+                if (lastFocused) lastFocused.focus();
+            }
+
             function open() {
+                lastFocused = document.activeElement;
                 overlay.classList.add('open');
                 overlay.scrollTop = 0;
                 if (onOpen) onOpen();
+                closeButton.focus();
             }
+
             openTrigger.addEventListener('click', open);
             openTrigger.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -932,14 +959,33 @@
                     open();
                 }
             });
-            document.getElementById(closeButtonId).addEventListener('click', function() {
-                overlay.classList.remove('open');
+            closeButton.addEventListener('click', close);
+            // Filet de secours : si le focus ressort de la modale (ex. apres
+            // avoir traverse l'iframe Shotgun, cross-origin, que le piege Tab
+            // ne peut pas intercepter), on le ramene dans la modale.
+            document.addEventListener('focusin', function(e) {
+                if (overlay.classList.contains('open') && !overlay.contains(e.target)) {
+                    closeButton.focus();
+                }
             });
             overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) overlay.classList.remove('open');
+                if (e.target === overlay) close();
             });
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && overlay.classList.contains('open')) overlay.classList.remove('open');
+                if (!overlay.classList.contains('open')) return;
+                if (e.key === 'Escape') { close(); return; }
+                if (e.key !== 'Tab') return;
+                var items = focusables();
+                if (!items.length) return;
+                var first = items[0];
+                var last = items[items.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
             });
         }
         wireOverlay('overlay', 'open-manifeste', 'close-manifeste');

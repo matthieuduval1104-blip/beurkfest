@@ -922,7 +922,7 @@
         document.getElementById('milestone').textContent = m;
         }
 
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 768 || window.innerHeight <= 560) {
             document.querySelectorAll('.cercle-psst .circle-label').forEach(function(l) {
                 l.innerHTML = 'Psst,<br>par ici !';
             });
@@ -1035,7 +1035,7 @@
         })();
 
         // Parallax souris (desktop only)
-        if (window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (window.innerWidth > 768 && window.innerHeight > 560 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             var mascottes = document.querySelectorAll('.mascotte');
             var depths = [12, 8, 10];
             document.addEventListener('mousemove', function(e) {

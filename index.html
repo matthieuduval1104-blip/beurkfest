@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BEURK | 26-27 sept. 2026 | L'Agronaute, Nantes</title>
-    <meta name="description" content="Le festival qui met les enfants à table ! Ateliers, animations, spectacles, boom, banquet et une offre de restauration aux petits oignons.">
+    <title>BEURK | 26 sept. 2026 | L'Agronaute, Nantes</title>
+    <meta name="description" content="Le festival qui met les enfants à table ! Ateliers, animations, spectacles, boom et une offre de restauration aux petits oignons.">
 
     <link rel="canonical" href="https://beurkfest.com/">
     <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
@@ -13,8 +13,8 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://beurkfest.com/">
-    <meta property="og:title" content="BEURK | 26-27 sept. 2026 | L'Agronaute, Nantes">
-    <meta property="og:description" content="Le festival qui met les enfants à table ! Ateliers, animations, spectacles, boom, banquet et une offre de restauration aux petits oignons.">
+    <meta property="og:title" content="BEURK | 26 sept. 2026 | L'Agronaute, Nantes">
+    <meta property="og:description" content="Le festival qui met les enfants à table ! Ateliers, animations, spectacles, boom et une offre de restauration aux petits oignons.">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:image" content="https://beurkfest.com/img/og-image.jpg">
     <meta property="og:image:width" content="1200">
@@ -25,9 +25,9 @@
       "@context": "https://schema.org",
       "@type": "Event",
       "name": "BEURK",
-      "description": "Le festival qui met les enfants à table ! Ateliers cuisine, spectacles, banquet.",
+      "description": "Le festival qui met les enfants à table ! Ateliers cuisine, spectacles.",
       "startDate": "2026-09-26",
-      "endDate": "2026-09-27",
+      "endDate": "2026-09-26",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "location": {
@@ -580,63 +580,27 @@
             width: 60px; transform: rotate(10deg); opacity: 0.85;
         }
 
-        /* ===== LIVRET PROGRAMME ===== */
+        /* ===== MENU A LA CARTE (image unique) ===== */
         .overlay-programme { align-items: center; }
 
-        .programme-viewport {
-            position: relative;
-            width: min(90vw, 860px, calc((100vh - 140px) * 1.6));
-            aspect-ratio: 1.6;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.25);
-            transform: rotate(-0.6deg);
+        .overlay-card-programme {
+            background: none;
+            padding: 0.6rem;
+            max-width: min(94vw, 1400px);
+            width: auto;
         }
 
-        .programme-track {
-            display: flex;
-            width: 400%;
-            height: 100%;
-            transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+        .programme-scroll {
+            max-height: 85vh;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 10px;
         }
 
-        .programme-spread {
-            width: 25%;
-            height: 100%;
-            flex-shrink: 0;
-            display: flex;
-        }
-
-        .programme-spread img {
-            width: 50%; height: 100%;
-            object-fit: cover;
+        .programme-scroll img {
             display: block;
-        }
-
-        .programme-nav {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            width: 44px; height: 44px;
-            background: #ffd968; border: 3px solid #6a2ad0; border-radius: 50%;
-            color: #6a2ad0; font-size: 1.1rem;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; z-index: 2;
-            transition: opacity 0.2s ease, transform 0.15s ease;
-        }
-        .programme-nav:hover { transform: translateY(-50%) scale(1.1); }
-        .programme-nav.is-disabled { opacity: 0.25; pointer-events: none; }
-        .programme-prev { left: 1.5vw; }
-        .programme-next { right: 1.5vw; }
-
-        @media (max-width: 640px) {
-            .programme-viewport {
-                width: min(82vw, 420px, calc((100vh - 160px) * 0.4));
-                aspect-ratio: 0.4;
-            }
-            .programme-spread { flex-direction: column; }
-            .programme-spread img { width: 100%; height: 50%; }
-            .programme-nav { width: 38px; height: 38px; font-size: 0.95rem; }
-            .programme-prev { left: 2vw; }
-            .programme-next { right: 2vw; }
+            width: clamp(900px, 92vw, 1380px);
+            height: auto;
         }
 
         /* ===== MOBILE =====
@@ -737,7 +701,7 @@
     </style>
 </head>
 <body>
-    <h1 class="sr-only">BEURK Festival food kids, 26-27 septembre 2026, L'Agronaute, Nantes</h1>
+    <h1 class="sr-only">BEURK Festival food kids, 26 septembre 2026, L'Agronaute, Nantes</h1>
 
     <div class="page">
 
@@ -773,7 +737,7 @@
         <div class="cercle-dates">
             <img src="img/cercle-jaune.png" alt="">
             <div class="circle-label">
-                <span>26 &amp; 27</span>
+                <span>26</span>
                 <span>septembre</span>
                 <span><a class="cercle-lien" href="https://www.google.com/maps/dir/?api=1&destination=L%27Agronaute%2C%20Rue%20du%20S%C3%A9n%C3%A9gal%2C%2044200%20Nantes" target="_blank" rel="noopener">L'Agronaute</a></span>
             </div>
@@ -832,7 +796,7 @@
                 <p>BEURK, justement.</p>
                 <p>Un festival où les enfants ne sont pas relégués dans un coin. Ils sont le cœur du truc. On les laisse pétrir, goûter, rater, recommencer. Sans filet, sans filtre, sans purée en sachet.</p>
                 <p>Bien manger, ça s'apprend en faisant. L'enfant qui se régale aujourd'hui, c'est l'adulte qui saura demain ce qu'il a dans l'assiette.</p>
-                <p>Les grands ne sont pas oubliés. Des tables nantaises qui font ce qu'elles veulent et le font bien, de la musique, des performances, une fête qui n'a pas envie de finir. Le dimanche, un banquet pour ceux qui veulent rester à table encore un peu.</p>
+                <p>Les grands ne sont pas oubliés. Des tables nantaises qui font ce qu'elles veulent et le font bien, de la musique, des performances, une fête qui n'a pas envie de finir.</p>
                 <p>Festif, familial, libre. Où manger mieux ne ressemble pas à une leçon, mais à une fête. Pour tous les âges, tous les goûts, tous les appétits. Personne ne repart le ventre vide.</p>
                 <p>Parce qu'au fond, bien manger, ça se partage.</p>
             </div>
@@ -852,39 +816,19 @@
     </div>
     <script src="https://shotgun.live/widget.js" defer></script>
 
-    <div class="overlay overlay-programme" id="overlay-programme" role="dialog" aria-modal="true" aria-label="Programme BEURK">
-        <button class="overlay-close programme-close" id="close-programme" aria-label="Fermer">&#10005;</button>
-
-        <button class="programme-nav programme-prev" id="programme-prev" aria-label="Page precedente">&#10094;</button>
-
-        <div class="programme-viewport">
-            <div class="programme-track" id="programme-track">
-                <div class="programme-spread">
-                    <img src="img/programme/page-1-cover.webp" alt="Le programme BEURK" draggable="false">
-                    <img src="img/programme/page-2-samedi-menu.webp" alt="Samedi, menu a la carte" draggable="false">
-                </div>
-                <div class="programme-spread">
-                    <img src="img/programme/page-3-animations.webp" alt="Les z'animations" draggable="false">
-                    <img src="img/programme/page-4-ateliers.webp" alt="Les z'ateliers" draggable="false">
-                </div>
-                <div class="programme-spread">
-                    <img src="img/programme/page-5-spectacles.webp" alt="Les pestacles" draggable="false">
-                    <img src="img/programme/page-6-restauration.webp" alt="La restauration" draggable="false">
-                </div>
-                <div class="programme-spread">
-                    <img src="img/programme/page-7-dimanche-cover.webp" alt="Dimanche, banquet ludique et boum des petits chefs" draggable="false">
-                    <img src="img/programme/page-8-dimanche-detail.webp" alt="Dimanche, le detail" draggable="false">
-                </div>
+    <div class="overlay overlay-programme" id="overlay-programme" role="dialog" aria-modal="true" aria-label="Menu a la carte BEURK">
+        <div class="overlay-card overlay-card-programme">
+            <button class="overlay-close" id="close-programme" aria-label="Fermer">&#10005;</button>
+            <div class="programme-scroll">
+                <img src="img/programme/menu-a-la-carte.webp" alt="BEURK, menu a la carte, samedi 26 septembre 2026 : restauration, les z'ateliers, les z'animations et les pestacles, entree 5 euros" draggable="false">
             </div>
         </div>
-
-        <button class="programme-nav programme-next" id="programme-next" aria-label="Page suivante">&#10095;</button>
     </div>
 
     <script>
     (function() {
         var festival = new Date(2026, 8, 26);
-        var festivalEnd = new Date(2026, 8, 28);
+        var festivalEnd = new Date(2026, 8, 27);
         var start = new Date(2026, 0, 1);
         var now = new Date();
         var msDay = 86400000;
@@ -991,48 +935,7 @@
         wireOverlay('overlay', 'open-manifeste', 'close-manifeste');
         wireOverlay('overlay-billet', 'open-billetterie', 'close-billetterie');
 
-        // Livret programme : feuilletage par spreads (4 doubles pages)
-        (function() {
-            var track = document.getElementById('programme-track');
-            var prevBtn = document.getElementById('programme-prev');
-            var nextBtn = document.getElementById('programme-next');
-            var viewport = document.querySelector('.programme-viewport');
-            var total = 4;
-            var index = 0;
-
-            function render() {
-                track.style.transform = 'translateX(-' + (index * (100 / total)) + '%)';
-                prevBtn.classList.toggle('is-disabled', index === 0);
-                nextBtn.classList.toggle('is-disabled', index === total - 1);
-            }
-
-            function goTo(i) {
-                index = Math.max(0, Math.min(total - 1, i));
-                render();
-            }
-
-            prevBtn.addEventListener('click', function() { goTo(index - 1); });
-            nextBtn.addEventListener('click', function() { goTo(index + 1); });
-
-            document.addEventListener('keydown', function(e) {
-                if (!document.getElementById('overlay-programme').classList.contains('open')) return;
-                if (e.key === 'ArrowLeft') goTo(index - 1);
-                if (e.key === 'ArrowRight') goTo(index + 1);
-            });
-
-            var startX = null;
-            viewport.addEventListener('pointerdown', function(e) { startX = e.clientX; });
-            viewport.addEventListener('pointerup', function(e) {
-                if (startX === null) return;
-                var dx = e.clientX - startX;
-                if (Math.abs(dx) > 40) { goTo(dx < 0 ? index + 1 : index - 1); }
-                startX = null;
-            });
-
-            wireOverlay('overlay-programme', 'open-programme', 'close-programme', function() { goTo(0); });
-
-            render();
-        })();
+        wireOverlay('overlay-programme', 'open-programme', 'close-programme');
 
         // Parallax souris (desktop only)
         if (window.innerWidth > 768 && window.innerHeight > 560 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
